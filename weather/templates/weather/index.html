@@ -1,0 +1,189 @@
+{% load static %}
+<html lang="en">
+<head>
+
+    <title>Weather App</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Bootstrap core CSS -->
+<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<style>
+    form{
+    text-align: center;
+    }
+
+form.example button {
+<!--  float: left;-->
+  width: 22%;
+  padding: 5px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+</style>
+
+<body>
+<h1 align="center">Weather App</h1>
+<div>
+<h4 align="center" style="padding-top:50px">Check your city Weather Here</h4>
+
+<form method="POST" class="example">
+{% csrf_token %}
+
+<input type="text" name = "city" placeholder="Enter city name" style="margin-top:50px">
+<button type="submit"><i class="fa fa-search"></i></button>
+
+</form>
+
+
+ {% if response %}
+        <div class="row pt-5">
+            <div class="col-xl-12 col-lg-12">
+
+                <h5 class="card-title heading-font" align="center">Current Weather Forecast</h5>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <img src="{% static 'Images/place.png' %}" class="img-fluid" width="50"
+                                         height="50"/>
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0">Place</h5>
+                                <h3 class="mt-3 mb-3">{{ response.name }}</h3>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <img src="https://img.icons8.com/plasticine/100/000000/compass.png"
+                                         class="img-fluid"
+                                         width="50" height="50">
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0" >Coordinates</h5>
+                                <h4 class="mt-3 mb-3">Latitude - {{ response.coord.lat }}</h4>
+                                <h4 class="mt-3 mb-0">Longitude - {{ response.coord.lon }}</h4>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <img src="https://img.icons8.com/plasticine/100/000000/fahrenheit-symbol.png"
+                                         class="img-fluid"
+                                         width="50" height="50"/>
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0" >Temperature</h5>
+                                <h3 class="mt-3 mb-3">{{ response.main.temp }} &#8457;</h3>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> <!-- end col-->
+
+                    <div class="col-lg-3">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                     <img src="https://img.icons8.com/plasticine/100/000000/windsock.png" class="img-fluid" width="50" height="50"/>
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0">Humidity</h5>
+                                <h3 class="mt-3 mb-3">{{ response.main.humidity }}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <img src="https://img.icons8.com/plasticine/100/000000/temperature-sensitive.png"
+                                         class="img-fluid"
+                                         width="50" height="50"/>
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0" >Feelslike</h5>
+                                <h3 class="mt-3 mb-3">{{ response.main.feels_like }} &#8457;</h3>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> <!-- end col-->
+                     <div class="col-lg-3">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <img src="https://img.icons8.com/plasticine/100/000000/foggy-night-1.png"
+                                         class="img-fluid"
+                                         width="50" height="50"/>
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0" >Cloud Cover</h5>
+                                <h3 class="mt-3 mb-3">{{ response.clouds.all }}% </h3>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> <!-- end col-->
+
+
+
+                    <div class="col-lg-3">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <img src="https://img.icons8.com/plasticine/100/000000/wind.png" class="img-fluid"
+                                         width="50" height="50"/>
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0" >Wind Speed</h5>
+                                <h3 class="mt-3 mb-3">{{response.wind.speed}}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="col-lg-3">
+                        <div class="card widget-flat">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <img src="{% static 'Images/sky.webp'%}" class="img-fluid"
+                                         width="50" height="50"/>
+                                </div>
+                                <h5 class="text-muted font-weight-normal mt-0">Sky</h5>
+                                <h3 class="mt-3 mb-3">{{response.weather.0.main}}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
+        </div>
+        </div>
+
+    {% endif %}
+</div>
+
+</body>
+</html>
+
+
+
